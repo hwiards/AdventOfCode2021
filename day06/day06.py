@@ -31,6 +31,19 @@ def version2(input, days):
 
     return sum(fishes_dict.values())
 
+def version3(input, days):
+    """ A different optimized version based on a queue """
+    fishes = [0] * 9
+    input = [int(i) for i in input.split(",")]
+    for fish in input:
+        fishes[fish] += 1
+
+    for _ in range (days):
+        parent = fishes.pop(0)
+        fishes.append(parent)
+        fishes[6] += parent
+
+    return sum(fishes)
 
 if __name__ == '__main__':
     input = open("input.txt").readline()
@@ -41,3 +54,7 @@ if __name__ == '__main__':
     # The first version does not scale ;)
     assert version2(EXAMPLE, 256) == 26984457539
     print(version2(input, 256))
+
+    assert version3(EXAMPLE, 256) == 26984457539
+    print(version3(input, 256))
+
